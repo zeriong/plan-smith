@@ -22,6 +22,8 @@ Most narrowing frames — `backward`'s off-anchor clause, `delete-first`, `api-f
 
 A task can be both: a build-out containing one hard trade-off. Then `spec-coverage` owns the document and the other frame owns that one section.
 
+**Tie-break — when genuinely unsure, choose build-out.** The two misroutings do not cost the same. A build-out sent to a narrowing frame **silently omits requirements**, and the loss surfaces only after implementation (in the observed case: no audio, no effects, no persistence layer at all). A decision sent to `spec-coverage` merely leaves one cell shallow, and the borrow rule above repairs it inside the same document. Asymmetric costs, so lean to the recoverable error.
+
 ### The four predicates
 
 Pick frames by these four predicates, not by domain nouns:
@@ -346,7 +348,14 @@ The default skeleton for the plan-writer. When a frame demands its own structure
                                             (e.g. "kill the origin and leave it down 24h — every existing link still resolves")
 ```
 
+**Document budget — methodology argument belongs in the packet, not the plan.** The packet already carries `Deliverable type`, `Frame selection + rationale` and `Style selection + rationale`; a plan that re-argues them is paying twice for one decision, out of the same page budget that has to specify the work. In the plan, the frame and style get **the header line only**. Routing arguments, "why not frame X", canon debates and provenance defences stay in the packet.
+
+Two exemptions, both placed at the **end** and both terse: the style-mandated confession (`Frame deviations & habit regressions`) and the relay audit — and the relay audit lives in `audit.md`, not in the plan. Everything else is measured by one test: **would a reader who must build this thing be worse off if the paragraph were deleted?** If not, it is methodology narration and it goes to the packet.
+
+Observed cost of ignoring this: one plan spent ~37% of its body on methodology self-narration to earn — by its own confession — three paragraphs of design value, and the displaced pages were exactly the requirements that never got built.
+
 Quality gate (plan-writer self-check):
+- [ ] Is the body **majority implementable instruction**? Frame/style rationale must not appear outside the header line (it belongs to the packet); confession sits at the end and stays terse. A plan that is longer than the unframed version while saying less about the work has failed this gate, not passed it.
 - [ ] For each required component, can you point to **one decision it killed or flipped**? A component you cannot trace to a decision is "present but unapplied" — and an unapplied component counts as an unapplied frame. (Both validation corpora showed self-grades inflate exactly here: "all components present" ≠ applied.)
 - [ ] Does every threshold / coefficient / multiplier carry one of three tags — **(a) derived** (one-line basis), **(b) lifetime-capped** (the first measurement that replaces it, when and by whom), or **(c) declared arbitrary** (or left honestly blank)? An untagged number fails the gate.
 - [ ] Are the steps ordered by dependency/verification rationale rather than build-order chronology — or is the chronological order justified? (Timeline regression is the single most reproduced failure across 150 validation plans.)
