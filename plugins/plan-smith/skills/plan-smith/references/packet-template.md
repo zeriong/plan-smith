@@ -37,6 +37,11 @@ Marking rule: any field inferred rather than confirmed from the conversation car
 ## Unknowns & open questions
 - <what is genuinely not known; the writer should carry these into the plan's assumptions/risks, not resolve them by invention>
 
+## Deliverable type (Gate 0)
+- Type: <decision | build-out>
+- Rationale: <followed literally, is the danger a wrong choice or an omission?>
+- (build-out) Frame is `spec-coverage`; any other frame is borrowed for one named sub-decision only: <which, or none>
+
 ## Frame selection
 - Frame: <name>
 - Rationale: <which routing predicate(s) fired; why this frame over the runner-up>

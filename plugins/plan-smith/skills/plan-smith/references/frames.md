@@ -6,14 +6,29 @@
 > - **Example values are form, not content.** Inline examples (the 90-second triage, "blast radius × recoverability") were observed being copied verbatim as answers. Re-derive every scale and number from the domain at hand.
 > - **Borrow openly.** Borrowing another frame's component is normal — expected within the no-slack trio (triage / checklist / safety-net) — but record the borrowing and its source; unattributed borrowing corrupts frame-fidelity retrospectives.
 > - Validation of this kind shows the specs are *implementable*, not that they are *right* — the corpus was itself written from these specs, so treat user retrospectives (SKILL.md Stage 3) as the only accumulating correctness signal.
+>
+> A later controlled A/B added a fourth caution, and it is the sharpest: **frames are decision instruments; a build-out needs coverage.** Same model, same fully-specified task (browser game: 10 stages, a physics loop, a named UI requirement), one plan framed with `backward` and one unframed. The framed plan ran 38% longer yet carried 41% less implementable instruction (777 → 460 words), spent ~37% of its body narrating its own methodology to earn — by its own confession — three paragraphs of design value, explicitly cut sound / particles / mobile as "off-anchor", went silent on score, stars, background, persistence **and the stack**, and re-labelled one of the user's three stated requirements "cosmetic". In code: the unframed baseline shipped `audio.ts`, `effects.ts`, `storage.ts`, `types.ts`; the framed one had no counterpart to any of them. Run **Gate 0** below before choosing any frame.
 
 ## Frame routing
+
+### Gate 0 — decision document, or build-out document?
+
+Run this **before** the predicates. Ask: *if this plan is followed literally, is the danger that we chose wrong, or that we left things out?*
+
+- **Decision** — a real either/or is open, or the cause / market / executor is unknown → the four predicates below pick the frame.
+- **Build-out** — the spec is already complete and the danger is omission, thin surfaces and integration → route to **`spec-coverage`**, and pull in another frame only as a sub-tool for one genuinely open sub-decision (record the borrow).
+
+Most narrowing frames — `backward`'s off-anchor clause, `delete-first`, `api-first`'s contract — are instruments for *cutting*. Aimed at an already-complete spec they license the omission of everything they did not happen to select, and the plan loses to an ordinary unframed engineering plan. Record Gate 0's answer and its reason in the packet.
+
+A task can be both: a build-out containing one hard trade-off. Then `spec-coverage` owns the document and the other frame owns that one section.
+
+### The four predicates
 
 Pick frames by these four predicates, not by domain nouns:
 
 | Predicate | Question | Direction |
 |---|---|---|
-| ① Location of uncertainty | What is unknown — the cause? the market's response? the executor themself? | Cause unknown → Diagnostic family. Nothing unknown, execution only → Backward / Form families |
+| ① Location of uncertainty | What is unknown — the cause? the market's response? the executor themself? | Cause unknown → Diagnostic family. Nothing unknown, execution only → **Gate 0 decides**: a build-out goes to `spec-coverage`; Backward / Form only where a choice is genuinely still open |
 | ② Rigidity of resources | Are time / money / staff / runway fixed? | Fixed or contradictory → Quantitative & Constraint family |
 | ③ Executor's cognitive slack | Can the executor deliberate at execution time (outage, disaster, burnout)? | No slack → reduction / tiering / safety-net frames |
 | ④ Scale agreeability | Can a severity / value / goal scale be agreed upon? | If not, quantitative / negative / verdict frames degenerate into taste wars — use multi-perspective or observation frames instead |
@@ -41,10 +56,11 @@ Shared principle: the quality of backward reasoning comes not from the direction
 - Starting point: fix at most 5 verifiable final acceptance criteria at the very top of the document, and derive every technology/design choice by working backward from them only.
 - Required components:
   - **Anchor qualification test** — an anchor is a condition whose failure causes maximal rework; decorative criteria don't qualify.
-  - **Disqualification of off-anchor demands** — requirements absent from the criteria have no right to move the architecture; state this explicitly.
+  - **Off-anchor demands: architecture-only disqualification** — a requirement absent from the anchors may not *bend the architecture*; it nevertheless **stays in scope and still ships**. Write both halves, because the second half is the one that gets dropped. Two hard bans: (1) never re-classify a *stated* requirement as decorative / cosmetic to keep it off the anchor list — the anchor list derives decisions, it is not a scope filter; (2) never leave an uncovered requirement in silence — it gets an explicit build step or an explicit deferral with a trigger.
   - **Anchor intersection pass** — overlay the anchors pairwise once for collision points (long-offline retention vs GC) and mutual-support points; the best decisions come from *between* anchors, and a discovered dependency (one anchor roofing the others) dictates execution order.
 - Failure mode: back-chaining toward a predetermined conclusion. Prevention: for each criterion, write down explicitly *which alternatives it kills*.
-- Watch-outs: audit each criterion's **resolution** too ("would a coarser granularity still satisfy the purpose, or did this flow backward from the preferred solution?" — the kills-list audits alternatives, not granularity); **pathless anchors** — every anchor must appear in ≥1 step as preparation + verification, not only on judgment day; **measurability bias** — the qualification test selects measurable conditions, so close with one sweep ("which decisive category has no anchor because it resists measurement?"); where a canonical answer already dominates the domain, the frame's value shifts from producing the answer to drawing the boundary where the canon is *not* forced.
+- Second failure mode (observed, costly): **the anchor list silently becomes the scope list.** Everything off-anchor goes unbuilt, and an item killed as an *alternative* is never re-instated as a *feature* — one plan killed "score-threshold clear" as a judgment rule, after which "score" existed in the document only as a dead alternative and the score/star system was never specified at all. Prevention: after the kills-list, sweep the spec once and mark **every** requirement build / defer; a requirement that appears in the plan only as a rejected alternative is a defect, not a decision.
+- Watch-outs: audit each criterion's **resolution** too ("would a coarser granularity still satisfy the purpose, or did this flow backward from the preferred solution?" — the kills-list audits alternatives, not granularity); **pathless anchors** — every anchor must appear in ≥1 step as preparation + verification, not only on judgment day; **measurability bias** — the qualification test selects measurable conditions, so close with one sweep ("which decisive category has no anchor because it resists measurement?"); where a canonical answer already dominates the domain, the frame's value shifts from producing the answer to drawing the boundary where the canon is *not* forced; **canon ends the derivation, not the specification** — noting "this choice is canonical, not derived" is honest, but the plan must still *state the choice and what it is bought for* ("TypeScript, so the stage schema and the state machine are checkable"). Observed failure: a plan logged the stack as canon and then contained **zero** stack sentences, so the implementer's defaults filled the vacuum (a CDN script tag plus a `document.write` fallback to a vendored file nobody created), and the plan's own self-declared highest-value item — a schema keystone — shipped with nothing enforcing it.
 - Lightweight variant (low reuse threshold): just "write the completion criteria at the top of the document first" captures half the value.
 
 ### premortem — autopsy back-construction
@@ -235,6 +251,17 @@ Shared principle: valid only while the cause is opaque; when the cause is obviou
 - Failure mode: over-applying to systems that don't run on voluntary participation (organizations with mandate power).
 
 ## F. Form family — the artifact's shape disciplines the thinking
+
+### spec-coverage — requirement × surface completeness matrix
+- Starting point: before any architecture, build the matrix of **every requirement × every surface it touches** (screens, states, content units, inputs, failure paths) — drawn from the spec *and* from what the artifact plainly needs in order to feel finished. That matrix is the document's top substantive section; architecture is then chosen to serve it.
+- Required components:
+  - **No-silent-drop ledger** — every cell is `build` / `defer (+ trigger)` / `n-a (+ reason)`. A blank cell is a defect in the plan, not a scope decision. Anything the spec states explicitly may only be `build`.
+  - **Quality floor per surface** — one sentence per user-facing surface saying what "finished" means there (destruction *feedback*, score *legibility*, progression *persisting* across visits). Without it, breadth degenerates into an inventory of stubs.
+  - **Content axis, not only mechanics axis** — if the spec says ten stages, the plan owes ten stages of authored content with a difficulty curve, not one stage plus a loader. Mechanics coverage is not content coverage.
+  - **Dependency-ordered build with a thin end-to-end slice first** — one path through the entire loop before any surface is polished, then breadth, then polish. The polish/content step must exist as a **named step**; if it is not named it does not happen (observed: a plan whose step list ended at "author the remaining stages" shipped no audio and no effects layer at all).
+  - **Named delivery stack, with the reason it was bought** — even when the choice is canonical, state it and state what it enforces; an unspecified stack is filled by implementer defaults.
+- Failure mode: the matrix goes wide and empty (a stub inventory) — the quality floor is the counterweight; or it degenerates into an unordered feature list — dependency ordering is the counterweight.
+- Watch-outs: this frame deliberately does **not** resolve hard trade-offs — when a genuine either/or shows up inside a cell, borrow the matching frame for that cell only and record the borrow (Gate 0); resist the pull toward the narrowing frames, whose scope-cutting is exactly what a complete spec does not need; and keep the matrix at surface granularity — one row per requirement × surface, not per function, or the matrix becomes the implementation.
 
 ### api-first — user code first
 - Starting point: write the ~10 lines of code the user will actually type at the top of the document first, and design the internals only in whatever direction makes that example true.

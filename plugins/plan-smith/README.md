@@ -7,7 +7,7 @@ Two-stage planning pipeline for Claude Code. Full documentation: [repository roo
 | Component | Path | Role |
 |---|---|---|
 | Skill `plan-smith` | `skills/plan-smith/SKILL.md` | Pipeline orchestration for the **main agent**: Stage 1 intent distillation → packet + user confirmation gate, Stage 2 delegation, Stage 3 verbatim relay + retrospective record. |
-| Frame library | `skills/plan-smith/references/frames.md` | 25 reasoning frames in 6 families — each with starting point, **required components**, failure mode, watch-outs — plus 4-predicate routing and the common plan template. |
+| Frame library | `skills/plan-smith/references/frames.md` | 26 reasoning frames in 6 families — each with starting point, **required components**, failure mode, watch-outs — plus 4-predicate routing and the common plan template. |
 | Style directives | `skills/plan-smith/references/styles.md` | `opus`-style (coverage-first disciplined draft + confession log), `fable`-style (structure-auditing revision + rule-encoded judgment), and the `relay` two-pass protocol with T1–T6 contamination audit. |
 | Packet template | `skills/plan-smith/references/packet-template.md` | The context packet contract — the only channel from session to writer. |
 | Agent `plan-writer` | `agents/plan-writer.md` | Clean-context author. Self-contained input contract, read-only toward the codebase, writes only its designated output file(s) (plan, plus audit.md in relay pass 2), returns paths — never the plan text. |

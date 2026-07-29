@@ -7,7 +7,7 @@ Claude Code용 2단 플래닝 파이프라인. 전체 문서: [레포 루트 REA
 | 구성 요소 | 경로 | 역할 |
 |---|---|---|
 | 스킬 `plan-smith` | `skills/plan-smith/SKILL.md` | **메인 에이전트**용 파이프라인 오케스트레이션: 1단계 의도 증류 → 패킷 + 사용자 확인 게이트, 2단계 위임, 3단계 원문 릴레이 + 회고 기록. |
-| 프레임 라이브러리 | `skills/plan-smith/references/frames.md` | 6개 계열 25개 추론 프레임 — 각각 시작점·**필수 부품**·실패 모드·watch-outs — 와 4술어 라우팅, 공통 플랜 템플릿. |
+| 프레임 라이브러리 | `skills/plan-smith/references/frames.md` | 6개 계열 26개 추론 프레임 — 각각 시작점·**필수 부품**·실패 모드·watch-outs — 와 4술어 라우팅, 공통 플랜 템플릿. |
 | 스타일 지시 | `skills/plan-smith/references/styles.md` | `opus` 스타일(망라 우선 규율형 초안 + 자백 로그), `fable` 스타일(구조 감사형 개정 + 판단의 규칙화), 그리고 T1~T6 오염 회계를 동반한 `relay` 2패스 프로토콜. |
 | 패킷 템플릿 | `skills/plan-smith/references/packet-template.md` | 컨텍스트 패킷 규약 — 세션에서 집필자로 가는 유일한 통로. |
 | 에이전트 `plan-writer` | `agents/plan-writer.md` | 깨끗한 컨텍스트의 집필자. 자기완결 입력 규약, 코드베이스 read-only, 지정된 출력 파일(플랜, relay 패스 2에서는 audit.md 포함)만 작성, 반환은 경로만(플랜 본문 반환 금지). |

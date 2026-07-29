@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/zeriong/plan-smith/releases"><img src="https://img.shields.io/badge/version-1.0.0-blue" alt="Version"></a>
+  <a href="https://github.com/zeriong/plan-smith/releases"><img src="https://img.shields.io/badge/version-1.1.0-blue" alt="Version"></a>
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License: MIT"></a>
   <a href="https://docs.claude.com/en/docs/claude-code/plugins"><img src="https://img.shields.io/badge/Claude%20Code-Plugin-orange" alt="Claude Code Plugin"></a>
 </p>
@@ -36,8 +36,9 @@ Long sessions produce bad plans for a structural reason: the agent that knows yo
 - **Intent distillation, not main-agent writing** — the skill extracts goals, hard constraints, **rejected alternatives**, settled decisions, and relevant files from the whole conversation into a packet. Extraction is far more robust to context noise than composition is.
 - **One confirmation gate** — before any writing happens, the packet is shown to you: *"here is the intent and constraints I distilled — correct?"* Every inferred field is marked `⚠guess` and confirmed. A pipeline that can correct intent always beats a clean draft of the wrong intent.
 - **Clean-context forging** — `plan-writer` runs with no session noise: packet + frame spec + style directive only. Read-only toward your codebase; writes only its designated output file(s) — the plan, plus audit.md in relay pass 2 — and returns paths, not text.
-- **A reasoning-frame library that earns its keep** — 25 frames (backward-chaining, premortem, back-of-envelope, constraint-first, incentive accounting, …) distilled from a 26-plan empirical experiment and stress-tested by a 100-plan validation corpus. Each frame ships with its **required components** (the parts whose absence turns it into decoration) and routing predicates for auto-selection.
+- **A reasoning-frame library that earns its keep** — 26 frames (backward-chaining, premortem, back-of-envelope, constraint-first, incentive accounting, …) distilled from a 26-plan empirical experiment, stress-tested by a 100-plan validation corpus, and **corrected by a controlled A/B in which a framed plan lost to an unframed baseline** on a spec-complete build — the fix is `spec-coverage` plus the Gate 0 routing rule below. Each frame ships with its **required components** (the parts whose absence turns it into decoration) and routing predicates for auto-selection.
 - **Two validated writing styles + relay** — `opus`-style (coverage-first disciplined draft, honest confession log) and `fable`-style (structure-auditing revision, judgment encoded as rules). **Relay mode** chains them: draft → confession → adversarial revision with a T1–T6 contamination audit — the strongest pipeline observed in the source experiment.
+- **Gate 0: it knows when a frame would hurt** *(new in 1.1)* — before any frame is chosen the pipeline asks *"followed literally, is the danger that we chose wrong, or that we left things out?"* A complete spec whose risk is omission is a **build-out** and routes to `spec-coverage` (a requirement × surface completeness matrix), because narrowing frames license the omission of whatever they did not select. This rule exists because a framed plan lost to an unframed one — see the FAQ.
 - **Lossless delivery + retrospective data** — the plan file is presented in full, and every outcome (adopted / edited / rejected) is appended to the packet, accumulating data to tune frame routing over time.
 
 ## Installation
@@ -104,7 +105,7 @@ Why the split works: *wanting the right plan* requires session context (Stage 1'
 
 ## Frames & styles
 
-- **[frames.md](plugins/plan-smith/skills/plan-smith/references/frames.md)** — 25 frames in 6 families (backward, negative/failure, quantitative/constraint, diagnostic, multi-perspective, form), each with starting point, required components, failure mode, and corpus-derived watch-outs. Routing goes by four predicates: *where is the uncertainty / how rigid are resources / how much cognitive slack does the executor have / can a scale be agreed*.
+- **[frames.md](plugins/plan-smith/skills/plan-smith/references/frames.md)** — 26 frames in 6 families (backward, negative/failure, quantitative/constraint, diagnostic, multi-perspective, form), each with starting point, required components, failure mode, and corpus-derived watch-outs. Routing runs **Gate 0 first** — *decision document or build-out?* (a complete spec whose risk is omission goes to `spec-coverage`, because narrowing frames license omission) — then four predicates: *where is the uncertainty / how rigid are resources / how much cognitive slack does the executor have / can a scale be agreed*.
 - **[styles.md](plugins/plan-smith/skills/plan-smith/references/styles.md)** — the two writing disciplines and the relay protocol. A style is a prompt-level discipline, **not** a model choice — designed to run on any model (cross-model portability is still being validated through retrospectives).
 
 ## FAQ
@@ -114,6 +115,8 @@ Why the split works: *wanting the right plan* requires session context (Stage 1'
 **Doesn't the subagent lose the conversation's nuance?** That's what the packet is for — goals, constraints, *rejected alternatives* (so the writer doesn't re-propose them), settled decisions, and per-file gists, all confirmed by you at the gate before writing begins.
 
 **When is relay worth double cost?** Hard-to-reverse or high-blast-radius decisions, plans you'll execute for months. The audit trail (`audit.md`) records what the revision changed, what it kept, and why — final merge authority stays with you.
+
+**Can a frame make a plan *worse*?** Yes — and it did, which is why 1.1 exists. In a controlled A/B (same model, same fully-specified task: a browser game with 10 stages, a physics loop and a named UI requirement), the `backward`-framed plan ran 38% longer than the unframed baseline yet carried **41% less implementable instruction**, spent ~37% of its body narrating its own methodology, cut sound/particles/mobile as "off-anchor", went silent on score, stars, persistence *and the stack*, and re-labelled one of the user's three stated requirements "cosmetic". The baseline shipped `audio.ts`, `effects.ts`, `storage.ts`, `types.ts`; the framed one shipped none of them. Three fixes followed: an anchor list may no longer act as a scope filter, "this choice is canonical" may end a derivation but never a specification, and **Gate 0** now diverts build-outs away from narrowing frames entirely.
 
 **What are the styles based on?** A controlled experiment: the same 26 planning tasks were executed under two distinct model fingerprints, then comparatively audited. The audit distilled each fingerprint into a reproducible writing directive; chaining them (relay) produced the strongest artifacts in that experiment — single-run evidence, so the pipeline treats relay as promising rather than proven and accumulates retrospectives to test it.
 
