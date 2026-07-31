@@ -10,6 +10,16 @@ Marking rule: any field inferred rather than confirmed from the conversation car
 - Requested by: <user>
 - Language of artifacts: <the language the user converses in>
 
+## Run stamp — record, never guess
+<!-- A plan whose producing version and model are unknown cannot be compared to a later one.
+     This pipeline's own A/B lost the model version of half its artifacts and had to recover it
+     from raw transcripts; two rounds were nearly mislabelled. Fill every line or mark it unknown. -->
+- plan-smith version: <from the plugin's plugin.json — not from memory>
+- frames.md fingerprint: <line count, or a digest if you can compute one>
+- Main agent model: <resolved id, e.g. claude-opus-5 — an alias like "opus" is NOT a version>
+- plan-writer model: <resolved id of the writing agent; state it if it differs from the main agent>
+- Skill invocation: <interactive `/plan-smith` | batch/scripted — comparability requires the same harness>
+
 ## Task (one line)
 <what is being planned, in one sentence>
 
