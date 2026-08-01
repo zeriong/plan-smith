@@ -52,6 +52,14 @@ Marking rule: any field inferred rather than confirmed from the conversation car
 - Rationale: <followed literally, is the danger a wrong choice or an omission?>
 - (build-out) Frame is `spec-coverage`; any other frame is borrowed for one named sub-decision only: <which, or none>
 
+## Load-bearing path candidate (build-out only)
+<!-- Which single path, if it fails, makes the artifact pointless? Not the most complex path — the one
+     everything else is decoration around. You have the session context, so you are better placed than the
+     writer to know what the user actually came for; the writer owns the final call and may overrule you,
+     but it must then name the path it chose instead. Leave this blank rather than guessing, and say so. -->
+- Path: <trigger → … → the observable effect the user came for>
+- Why this one: <what becomes pointless if it fails>
+
 ## Frame selection
 - Frame: <name>
 - Rationale: <which routing predicate(s) fired; why this frame over the runner-up>

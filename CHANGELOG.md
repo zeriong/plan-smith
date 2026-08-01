@@ -12,6 +12,61 @@ version has to move. Release 1.1.1 exists for that reason alone.
 
 ---
 
+## [1.2.0] — 2026-08-01
+
+The second release driven by a failure of this plugin's own output — and this time the plan
+**passed every existing gate.** A controlled round-2 A/B scored a `spec-coverage` build-out plan
+**7/7** on a rubric fixed before the run: Gate 0 fired, routing was correct, all seven required
+surfaces were specified, no requirement was demoted, the stack was named with what it bought.
+The artifact built from it had a dead primary interaction.
+
+Reading the code showed why, and it was not a missing part. The launch path crossed five layers,
+every layer existed, and each one carried a guard. Nothing in the plan ever wrote the chain down,
+so nobody checked that the guards can all hold at the same moment. **1.1 taught the pipeline to
+stop dropping surfaces; 1.2 teaches it to specify that the surfaces are connected.**
+
+Two more findings from the same round shaped the rest of this release: one plan reached 3,026 words
+of which **67% were table rows**, leaving ~334 words of executable instruction; and one
+implementation resurrected an alternative its plan had rejected by name, declaring a dependency
+version that had never been published.
+
+### Added
+
+- **`## Load-bearing path`** — a required section for build-outs. Pick the one path whose failure
+  makes the artifact pointless (a game's launch, a form's submit-to-persisted, a pipeline's first
+  record landing, an approval flow's first request) and write it as a chain of **≤5 hops**. Every hop
+  carries three columns: its name, the condition that must hold for it to pass, and **where that
+  condition first becomes true**. Followed by a **cold-start table** covering every condition named
+  in those hops — initial value, who changes it, when. **A blank cell is a defect in the plan.**
+  Two hard rules: a hop whose "first becomes true at" cannot be filled means the plan is unfinished,
+  and a hop may only name symbols the plan commits to creating elsewhere.
+- **Verb sentences** — every requirement marked `build` owes one sentence **outside any table**:
+  *when ⟨actor⟩ does ⟨action⟩, ⟨observable result⟩ happens; its absence shows up as ⟨symptom⟩*.
+  Rows are the ledger; sentences are the instruction. Rows without sentences are a stub inventory.
+- **`## Implementer contract`** — the plan's last and shortest section, for what must survive the gap
+  to someone who never saw the conversation: rejections carry **revival triggers** (an unexplained
+  prohibition gets overturned), dependencies are pinned to **versions that resolve**, and any guarantee
+  the stack was bought for is claimed with **the command and its exit status in "done"**, not as a
+  property in prose. Three round-2 plans bought compile-time checking and shipped code that did not
+  compile, because nothing in "done" referred to the build.
+- **Stage 2c — wiring audit** (`SKILL.md`) — for build-outs, a **second, fresh** `plan-writer` instance
+  audits the finished plan against five document-level questions and writes `wiring-audit.md`; the main
+  agent then has the writer make the minimal additions. An author cannot audit their own omissions,
+  which is why the auditor is a different instance. Roughly **+20–35% tokens** on the writing stage,
+  spent on the one defect class that reading cannot see. Skipped for decision documents.
+- **`Load-bearing path candidate`** in the packet template, and input-contract item 7 for `plan-writer`
+  — the main agent has the session context and is better placed to know what the user came for; the
+  writer owns the final call but must name the path it chose instead.
+- Three quality-gate items and two `spec-coverage` required components wired to the above.
+
+### Deliberately not added
+
+An instruction to "review whether the code will actually work". It is unfalsifiable (an agent can
+assert it), it arrives after the cost is sunk, and in two validation corpora self-review language was
+counted as credit for defects that were never fixed. A plan cannot verify anything — so every rule in
+this release is checkable **by reading the plan against itself**, and none of them asks anyone to build,
+run, open or look at the artifact.
+
 ## [1.1.3] — 2026-08-01
 
 Documentation only. No change to skill behaviour, frames, or agent definitions.
@@ -151,6 +206,7 @@ Initial release.
   experiment it came from, and the pipeline still treats it as promising rather
   than proven. Retrospectives accumulate the evidence.
 
+[1.2.0]: https://github.com/zeriong/plan-smith/releases/tag/v1.2.0
 [1.1.3]: https://github.com/zeriong/plan-smith/releases/tag/v1.1.3
 [1.1.2]: https://github.com/zeriong/plan-smith/releases/tag/v1.1.2
 [1.1.1]: https://github.com/zeriong/plan-smith/releases/tag/v1.1.1

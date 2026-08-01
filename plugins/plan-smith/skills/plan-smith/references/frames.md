@@ -258,7 +258,8 @@ Shared principle: valid only while the cause is opaque; when the cause is obviou
 - Starting point: before any architecture, build the matrix of **every requirement × every surface it touches** (screens, states, content units, inputs, failure paths) — drawn from the spec *and* from what the artifact plainly needs in order to feel finished. That matrix is the document's top substantive section; architecture is then chosen to serve it.
 - Required components:
   - **No-silent-drop ledger** — every cell is `build` / `defer (+ trigger)` / `n-a (+ reason)`. A blank cell is a defect in the plan, not a scope decision. Anything the spec states explicitly may only be `build`.
-  - **Quality floor per surface** — one sentence per user-facing surface saying what "finished" means there (destruction *feedback*, score *legibility*, progression *persisting* across visits). Without it, breadth degenerates into an inventory of stubs.
+  - **Quality floor per surface** — one sentence per user-facing surface saying what "finished" means there (destruction *feedback*, score *legibility*, progression *persisting* across visits). Without it, breadth degenerates into an inventory of stubs. Each `build` cell owes its **verb sentence outside the table** (see "Requirements get verbs, not only nouns" at the end of this file) — the ledger row is not the instruction, and a matrix of 41 rows carrying ~334 words of instruction has been observed.
+  - **The load-bearing path, wired** — the matrix proves surfaces are *listed*; it cannot prove the artifact *runs*. This frame therefore owes the `## Load-bearing path` chain and its cold-start table (see the end of this file). Observed failure of skipping it: full marks on surface coverage, primary interaction dead.
   - **Content axis, not only mechanics axis** — if the spec says ten stages, the plan owes ten stages of authored content with a difficulty curve, not one stage plus a loader. Mechanics coverage is not content coverage.
   - **Dependency-ordered build with a thin end-to-end slice first** — one path through the entire loop before any surface is polished, then breadth, then polish. The polish/content step must exist as a **named step**; if it is not named it does not happen (observed: a plan whose step list ended at "author the remaining stages" shipped no audio and no effects layer at all).
   - **Named delivery stack, with the reason it was bought** — even when the choice is canonical, state it and state what it enforces; an unspecified stack is filled by implementer defaults.
@@ -342,11 +343,51 @@ The default skeleton for the plan-writer. When a frame demands its own structure
                                             "independent/parallel") + its verification + which acceptance
                                             criterion/anchor it serves; calendar labels only as
                                             projections of stated dependencies
-## Alternatives & rejection rationale     ← at least 1; revival conditions recommended
+## Load-bearing path                      ← the one path that must close, as a chain (see below). Build-outs: mandatory
+## Alternatives & rejection rationale     ← at least 1; **each rejection carries a revival trigger**
 ## Risks & mitigations
 ## Definition of "done"                   ← at least one measurably testable sentence is mandatory
                                             (e.g. "kill the origin and leave it down 24h — every existing link still resolves")
+## Implementer contract                   ← terse, at the end: pinned stack, revival triggers, the command that proves the claim
 ```
+
+### The load-bearing path — specify the wiring, not only the parts
+
+A plan can name every part, order them by dependency, and still describe something that never runs, because **the parts existing is not the parts being connected.** Observed: a plan carried a 41-row coverage matrix and ~930 words of instruction, scored full marks on surface coverage, and shipped an artifact whose primary interaction did nothing — every layer was present, and the chain through them was never written down, so nobody checked that the conditions guarding each hop can all hold at the same moment.
+
+Pick the **one** path whose failure makes the artifact pointless — not the most complex one, the load-bearing one. It is domain-shaped: a game's launch, a form's submit-to-persisted, a pipeline's first record landing in the sink, a CLI's first successful command, an approval flow's first request reaching a decider. Write it as a chain of **≤5 hops**, and give every hop three things:
+
+| hop | name | passes only if | that condition first becomes true at |
+|---|---|---|---|
+| 1 | the named trigger / entry symbol | the guard on this hop | the step (or caller) that sets it |
+| … | … | … | … |
+| n | the observable effect | — | — |
+
+Then, in the same section, a **cold-start table**: every state, flag, queue or precondition that appears in a "passes only if" cell, with its value at first entry, who changes it, and when that runs. **A blank cell is a defect in the plan, not a detail for later.**
+
+Two hard rules, because both failures are cheap to avoid on paper and expensive to find later:
+- **If you cannot fill "first becomes true at" for a hop, the plan is unfinished.** That column is where "the parts exist" turns into "the path closes"; it is answerable or it is not, and unlike a promise to review something it cannot be satisfied by asserting it.
+- **The chain names symbols/steps that the plan elsewhere commits to creating.** A hop naming something the plan never introduces is a gap, not shorthand.
+
+This section is *specification*, not verification. It does not ask anyone to run, open, watch or inspect the artifact — a plan cannot verify anything, and an instruction to "check that it works" is unfalsifiable, arrives after the cost is sunk, and in two validation corpora such self-review language was consistently counted as credit for defects that were never fixed. What this section does is force the wiring to be *decided* while it is still a sentence.
+
+### Requirements get verbs, not only nouns
+
+A coverage matrix counts **surfaces** (nouns), and nouns are cheap: rows can be added faster than instructions can be written. Observed: one plan reached 3,026 words of which **67% were table rows**, leaving ~334 words of actual instruction — the frame had routed correctly and its components were present, yet the quality floor never turned into anything an implementer could execute.
+
+So every requirement marked `build` owes **one sentence, outside any table**, in this shape:
+
+> When ⟨actor⟩ does ⟨action⟩, ⟨observable result⟩ happens; its absence shows up as ⟨the visible symptom⟩.
+
+Rules: it may not be a table row (tables are the ledger; sentences are the instruction), and the third clause may not restate the second in the negative ("it doesn't happen" is not a symptom). Rows without their sentence are an inventory of stubs.
+
+### Implementer contract — the plan's last section, and the shortest
+
+Whoever builds this will not have the conversation, the packet, or the author. Three things must survive that gap, each one line:
+
+- **Rejected alternatives carry revival triggers.** "X was rejected (because Y). **If Y is observed to be false, reopen it.**" A rejection with no trigger reads to the builder as an unexplained prohibition, and unexplained prohibitions get overturned — observed: a plan rejected hand-rolling a subsystem by name and chose a library; the implementation declared the library, imported it nowhere, and hand-rolled the subsystem anyway.
+- **The stack is pinned to versions that resolve.** Naming a dependency without a version that actually exists is worse than naming none — observed: a declared dependency version that had never been published, which fails at install time, after the work is done.
+- **Any guarantee the plan claims to buy is claimed with the command that proves it.** If the plan says a tool is bought because it "checks X at build time", then "done" must name the invocation and its exit status (`<the project's build/typecheck command> exits 0`), not the property. Observed: three plans bought compile-time checking in their stack section and shipped code that did not compile, because the guarantee was asserted in prose and nothing in "done" referred to it. This is a **written completion criterion**, not a request that someone go and look.
 
 **Document budget — methodology argument belongs in the packet, not the plan.** The packet already carries `Deliverable type`, `Frame selection + rationale` and `Style selection + rationale`; a plan that re-argues them is paying twice for one decision, out of the same page budget that has to specify the work. In the plan, the frame and style get **the header line only**. Routing arguments, "why not frame X", canon debates and provenance defences stay in the packet.
 
@@ -355,6 +396,16 @@ Two exemptions, both placed at the **end** and both terse: the style-mandated co
 Observed cost of ignoring this: one plan spent ~37% of its body on methodology self-narration to earn — by its own confession — three paragraphs of design value, and the displaced pages were exactly the requirements that never got built.
 
 Quality gate (plan-writer self-check):
+- [ ] **Load-bearing path:** is there a chain of ≤5 hops for the one path whose failure makes the artifact
+      pointless, with all three columns filled — and does the cold-start table have **no blank cells**?
+      Every "passes only if" condition needs a "first becomes true at". A hop naming a symbol the plan
+      never commits to creating is a gap. (Build-outs: this gate is mandatory.)
+- [ ] **Verbs, not only nouns:** does every `build` requirement have its one sentence outside any table
+      — *when ⟨actor⟩ does ⟨action⟩, ⟨result⟩ happens; its absence shows up as ⟨symptom⟩*?
+      Count them against the ledger rows: rows without sentences are a stub inventory.
+- [ ] **Implementer contract:** does every rejection carry a revival trigger, is every dependency pinned to
+      a version that resolves, and for each guarantee the stack was bought for, does "done" name **the
+      command and its exit status** rather than the property?
 - [ ] Is the body **majority implementable instruction**? Frame/style rationale must not appear outside the header line (it belongs to the packet); confession sits at the end and stays terse. A plan that is longer than the unframed version while saying less about the work has failed this gate, not passed it.
 - [ ] For each required component, can you point to **one decision it killed or flipped**? A component you cannot trace to a decision is "present but unapplied" — and an unapplied component counts as an unapplied frame. (Both validation corpora showed self-grades inflate exactly here: "all components present" ≠ applied.)
 - [ ] Does every threshold / coefficient / multiplier carry one of three tags — **(a) derived** (one-line basis), **(b) lifetime-capped** (the first measurement that replaces it, when and by whom), or **(c) declared arbitrary** (or left honestly blank)? An untagged number fails the gate.

@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/zeriong/plan-smith/releases"><img src="https://img.shields.io/badge/version-1.1.3-blue" alt="Version"></a>
+  <a href="https://github.com/zeriong/plan-smith/releases"><img src="https://img.shields.io/badge/version-1.2.0-blue" alt="Version"></a>
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License: MIT"></a>
   <a href="https://docs.claude.com/en/docs/claude-code/plugins"><img src="https://img.shields.io/badge/Claude%20Code-Plugin-orange" alt="Claude Code Plugin"></a>
 </p>
@@ -39,6 +39,8 @@
 - **제값 하는 추론 프레임 라이브러리** — 26개 플랜 실증 실험에서 증류하고, 100플랜 검증 코퍼스로 스트레스 테스트하고, **프레임을 쓴 플랜이 안 쓴 베이스라인에 패배한 통제 A/B로 교정한** 26개 프레임(인수조건 역산, 프리모템, 봉투 계산, 제약 우선, 인센티브 회계 등). 각 프레임에는 **필수 부품**(없으면 프레임이 장식으로 퇴화하는 요소)과 자동 선택용 라우팅 술어가 딸려 있습니다.
 - **검증된 집필 스타일 2종 + relay** — `opus` 스타일(망라 우선의 규율형 초안 + 정직한 자백 로그)과 `fable` 스타일(구조를 감사하는 개정 + 판단의 규칙화). **relay 모드**는 둘을 직렬 연결합니다: 초안 → 자백 → T1~T6 오염 회계를 동반한 적대적 개정 — 원 실험에서 관측된 가장 강한 파이프라인입니다.
 - **Gate 0: 프레임이 해가 되는 때를 압니다** *(1.1 신규)* — 프레임을 고르기 **전에** 묻습니다: *"이 플랜을 그대로 따르면, 위험은 잘못 고른 것인가 빠뜨린 것인가?"* 요구가 이미 완전하고 위험이 누락이면 그것은 **build-out**이고 `spec-coverage`(요구×표면 완전성 매트릭스)로 보냅니다 — 좁히는 프레임은 자기가 고르지 않은 것의 누락을 허가하기 때문입니다. 이 규칙은 프레임을 쓴 플랜이 안 쓴 플랜에 패배해서 생겼습니다(FAQ 참조).
+- **부품이 아니라 배선을 명세합니다** *(1.2 신규)* — build-out 플랜은 **하중 경로(load-bearing path)** 를 반드시 담습니다: 실패하면 산출물이 무의미해지는 단 하나의 경로를 홉 5개 이하의 사슬로 쓰고, 각 홉에 **가드 조건**과 **그 조건이 처음 참이 되는 지점**을 병기하며, 빈 칸 없는 최초 진입 상태표를 붙입니다. 모든 `build` 요구는 **표 밖의 동사 문장**도 갖습니다(*⟨행위자⟩가 ⟨행동⟩하면 ⟨결과⟩가 일어나고, 없으면 ⟨증상⟩으로 보인다*). 이 조항은 표면 커버리지 만점을 받은 플랜이 **주 상호작용이 죽은** 산출물을 낳아서 생겼습니다 — 부품은 전부 있었고, 그것들을 잇는 사슬만 아무도 적지 않았습니다.
+- **플랜을 받기 전에 배선 감사를 거칩니다** *(1.2 신규)* — build-out에서는 **새 인스턴스**의 plan-writer가 완성된 플랜을 5개 문서 수준 질문으로 감사합니다(미완성 홉, 상태표 빈 칸, 플랜이 만들지 않는 심볼을 가리키는 홉, 동사 문장 없는 원장 행, 명령이 아니라 산문으로 주장된 보증). 작성자는 자기 누락을 감사할 수 없습니다. 집필 단계 토큰이 약 20~35% 늘고, 읽어서는 안 보이는 결함 한 종류를 잡습니다.
 - **무손실 전달 + 회고 데이터** — 플랜 파일 전문이 그대로 제시되고, 결과(채택/수정/기각)가 패킷에 축적되어 프레임 라우팅을 다듬는 데이터가 됩니다.
 
 ## 설치
@@ -96,6 +98,9 @@ claude plugin install plan-smith@plan-smith-marketplace
 2단계 — 격리 집필 (plan-writer, 신선한 컨텍스트)
   패킷 + 프레임 스펙 + 스타일 지시 ──▶ plans/<slug>/plan.md
   relay: opus 스타일 초안(+자백 로그) ──▶ fable 스타일 개정(+T1~T6 오염 회계)
+
+2c단계 — 배선 감사 (새 plan-writer 인스턴스, build-out 한정)
+  plan.md ──▶ 문서 수준 질문 5개 ──▶ wiring-audit.md ──▶ 최소 보강
 
 3단계 — 무손실 릴레이 (메인 에이전트)
   플랜 전문 제시 ──▶ 사용자 판정 ──▶ 회고 1줄을 패킷에 축적
