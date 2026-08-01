@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/zeriong/plan-smith/releases"><img src="https://img.shields.io/badge/version-1.1.2-blue" alt="Version"></a>
+  <a href="https://github.com/zeriong/plan-smith/releases"><img src="https://img.shields.io/badge/version-1.1.3-blue" alt="Version"></a>
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License: MIT"></a>
   <a href="https://docs.claude.com/en/docs/claude-code/plugins"><img src="https://img.shields.io/badge/Claude%20Code-Plugin-orange" alt="Claude Code Plugin"></a>
 </p>
@@ -107,6 +107,14 @@ Why the split works: *wanting the right plan* requires session context (Stage 1'
 
 - **[frames.md](plugins/plan-smith/skills/plan-smith/references/frames.md)** — 26 frames in 6 families (backward, negative/failure, quantitative/constraint, diagnostic, multi-perspective, form), each with starting point, required components, failure mode, and corpus-derived watch-outs. Routing runs **Gate 0 first** — *decision document or build-out?* (a complete spec whose risk is omission goes to `spec-coverage`, because narrowing frames license omission) — then four predicates: *where is the uncertainty / how rigid are resources / how much cognitive slack does the executor have / can a scale be agreed*.
 - **[styles.md](plugins/plan-smith/skills/plan-smith/references/styles.md)** — the two writing disciplines and the relay protocol. A style is a prompt-level discipline, **not** a model choice — designed to run on any model (cross-model portability is still being validated through retrospectives).
+
+## Changelog
+
+Release history, and *why* each frame or rule was added, lives in
+**[CHANGELOG.md](CHANGELOG.md)**. Worth knowing before you pin a version: the
+plugin is served from a **version-keyed cache**, so editing the source tree does
+not reach an installed client — every behavioural change ships as a version bump,
+and 1.1.1 exists for that reason alone.
 
 ## FAQ
 

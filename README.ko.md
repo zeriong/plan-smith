@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/zeriong/plan-smith/releases"><img src="https://img.shields.io/badge/version-1.1.2-blue" alt="Version"></a>
+  <a href="https://github.com/zeriong/plan-smith/releases"><img src="https://img.shields.io/badge/version-1.1.3-blue" alt="Version"></a>
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License: MIT"></a>
   <a href="https://docs.claude.com/en/docs/claude-code/plugins"><img src="https://img.shields.io/badge/Claude%20Code-Plugin-orange" alt="Claude Code Plugin"></a>
 </p>
@@ -107,6 +107,13 @@ claude plugin install plan-smith@plan-smith-marketplace
 
 - **[frames.md](plugins/plan-smith/skills/plan-smith/references/frames.md)** — 6개 계열(역산 / 부정·실패 / 정량·제약 / 진단 / 다관점 / 형태) 26개 프레임. 각각 시작점·필수 부품·실패 모드·코퍼스가 남긴 watch-outs 포함. 라우팅은 **Gate 0 먼저** — *결정 문서인가 build-out인가?*(요구가 완전하고 위험이 누락이면 `spec-coverage`로 — 좁히는 프레임은 누락을 허가하므로) — 그다음 4개 술어: *불확실성의 위치 / 자원의 경직성 / 실행자의 인지 여유 / 척도 합의 가능성*.
 - **[styles.md](plugins/plan-smith/skills/plan-smith/references/styles.md)** — 두 집필 규율과 relay 프로토콜. 스타일은 프롬프트 수준의 규율이지 **모델 선택이 아닙니다** — 어떤 모델에서든 동작하도록 설계되었습니다(모델 간 이식성은 회고 데이터로 검증 중인 가설입니다).
+
+## 변경 이력
+
+릴리스 이력과 각 프레임·규칙이 **왜** 추가됐는지는 **[CHANGELOG.md](CHANGELOG.md)** 에 있습니다.
+버전을 고정하기 전에 알아둘 것: 플러그인은 **버전 키 캐시**에서 서비스되므로 소스 트리를 고쳐도
+설치된 클라이언트에는 도달하지 않습니다. 동작이 바뀌는 변경은 전부 버전 상승으로 배포되며,
+1.1.1은 그 이유만으로 존재하는 릴리스입니다.
 
 ## FAQ
 
