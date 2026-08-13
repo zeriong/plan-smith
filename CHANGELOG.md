@@ -50,6 +50,19 @@ arm A = baseline plan told who implements, arm B = 1.3.0 plan-smith. The clause 
 if B beats A on the graded ladder; if B ≈ A, this changelog gets that verdict appended — the release
 stays either way, because history is not rewritten here.
 
+### Validation verdict (2026-08-13, same day — run `wf_c2740e64-b67`)
+
+**B ≈ A.** Ladder medians tied at L5 (A: L5/L5/L0, B: L5/L1/L5; one implementer slip each side).
+The clause's *standalone* additive effect was not observed at n=3. What the run did show is the size
+of the information effect the clause rides on: uninformed opus plans had put the weak implementer at
+**below-build** (5 of 6 cells dead at install/build); one line naming the implementer moved both arms
+to **median L5**, with both planners independently converging on no-build, globals-over-modules,
+pinned real-version CDN — the machinery budget's own prescriptions. The knowledge was in the model;
+the clause codifies it rather than adds to it. Phantom dependency versions: zero in six cells,
+against five phantom incidents in the uninformed run — a copyable URL leaves recall nothing to
+hallucinate. The clause stays as codification with its packet field doing the measurable work, and
+this verdict is the recorded reason no stronger claim is made.
+
 ## [1.2.0] — 2026-08-01
 
 The second release driven by a failure of this plugin's own output — and this time the plan
