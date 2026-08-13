@@ -12,6 +12,25 @@ Two-stage planning pipeline for Claude Code. Full documentation: [repository roo
 | Packet template | `skills/plan-smith/references/packet-template.md` | The context packet contract — the only channel from session to writer. |
 | Agent `plan-writer` | `agents/plan-writer.md` | Clean-context author. Self-contained input contract, read-only toward the codebase, writes only its designated output file(s) (plan, plus audit.md in relay pass 2), returns paths — never the plan text. |
 
+## Measured results — why this skill earns its tokens
+
+Every claim below is a lab measurement, not an estimate (data: z-lab `plan-smith-lab/`, series `tco/`, `transfer/`).
+
+**Total cost to a *working* artifact** (repair loop included; weak implementer, fixed repair-prompt template, n=4 chains per arm):
+
+| Stage | baseline plan | plan-smith v1.4 |
+|---|---|---|
+| Plan (opus) | 229k | 689k — **3.0× dearer** (reads four skill docs) |
+| Implementations ×4 (haiku) | 6,968k | 4,069k — **42% cheaper** |
+| Repairs to DONE | **8,380k** (4 rounds) | **620k** (1 round) — **13.5× cheaper** |
+| **Total, 4 working artifacts** | **15.58M** | **5.38M — 65.5% cheaper** |
+
+In round numbers: baseline 100 + repairs 116 = 216; plan-smith 66, done. The mechanism, not just the number: the repair prompts were identical templates, so the gap comes from the **defect class each plan produces** — plan-smith's one failure was a single symbol its copyable blocks had missed (one-line fix; that chain ended in the test family's first stage CLEAR), while the baseline's failures were cross-component contract mismatches (one interface rebuild, one three-round whack-a-mole).
+
+**Side effects with receipts:** phantom dependency versions 5 → 0 once URLs became copyable strings; 4/4 replicas reproduced the identical CDN line and file layout; the only stage CLEARs in the whole test family came from plan-smith cells.
+
+**Limits, stated in the same breath:** small repair sample (2 chains vs 1), one task, one weak implementer — the gap shrinks with strong implementers, which succeed without the skill. Half the baseline repair bill rides on a single chain.
+
 ## Entry point
 
 ```

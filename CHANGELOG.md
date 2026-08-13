@@ -12,6 +12,21 @@ version has to move. Release 1.1.1 exists for that reason alone.
 
 ---
 
+## [1.4.2] — 2026-08-13
+
+Documentation only. 1.4.1 put the measured economics in the **root** READMEs — which, per this
+project's own delivery rule, never reach an installed client: the cache packages `plugins/plan-smith/`
+and nothing above it. This release carries the evidence to where users actually read it.
+
+### Added
+
+- "Measured results" section in **both packaged READMEs** (`plugins/plan-smith/README.md`, `.ko.md`):
+  total cost to a working artifact 65.5% cheaper (5.38M vs 15.58M tokens, repair loop included),
+  the stage split (plan 3.0× dearer, implementations 42% cheaper, repairs 13.5× cheaper), the
+  mechanism (defect class: one un-copied symbol versus cross-component contract mismatches, under
+  identical repair prompts), the receipts for side effects (phantom versions 5→0, 4/4 reproduction
+  consistency, all family CLEARs from plan-smith cells), and the limits in the same breath.
+
 ## [1.4.1] — 2026-08-13
 
 Documentation only — the pre-registered outcome of the total-cost experiment, published whichever
@@ -318,6 +333,7 @@ Initial release.
   experiment it came from, and the pipeline still treats it as promising rather
   than proven. Retrospectives accumulate the evidence.
 
+[1.4.2]: https://github.com/zeriong/plan-smith/releases/tag/v1.4.2
 [1.4.1]: https://github.com/zeriong/plan-smith/releases/tag/v1.4.1
 [1.4.0]: https://github.com/zeriong/plan-smith/releases/tag/v1.4.0
 [1.3.0]: https://github.com/zeriong/plan-smith/releases/tag/v1.3.0
