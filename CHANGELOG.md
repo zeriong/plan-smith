@@ -12,6 +12,28 @@ version has to move. Release 1.1.1 exists for that reason alone.
 
 ---
 
+## [1.4.1] — 2026-08-13
+
+Documentation only — the pre-registered outcome of the total-cost experiment, published whichever
+way it pointed. It pointed favorably.
+
+### Added
+
+- FAQ entry "Does the token cost pay for itself?" in both root READMEs, carrying the measured
+  economics: cost to a **working** artifact with the repair loop included, weak implementer, fixed
+  repair-prompt template. The plan costs 3.0× more to write, implementations come out 42% cheaper,
+  repairs 13.5× cheaper (the defect classes differ: one un-copied symbol versus cross-component
+  contract mismatches), total 65.5% cheaper to four working artifacts — with the limits stated in
+  the same breath: tiny repair sample, one task, one weak implementer, and the gap shrinks with
+  strong implementers. Raw data and per-chain forensics live in the lab (`plan-smith-lab/tco/`).
+
+### Errata
+
+- The 1.4.1 version-bump commit claimed this content but carried only the version strings: the
+  editing script died on a mis-remembered FAQ anchor *after* the bump was staged, and the commit
+  went out under a message describing work it did not contain. This commit delivers the claimed
+  content. History is not rewritten here; the slip stays visible.
+
 ## [1.4.0] — 2026-08-13
 
 The first release **gated by its validation instead of validated after shipping.** The draft sat
@@ -296,6 +318,7 @@ Initial release.
   experiment it came from, and the pipeline still treats it as promising rather
   than proven. Retrospectives accumulate the evidence.
 
+[1.4.1]: https://github.com/zeriong/plan-smith/releases/tag/v1.4.1
 [1.4.0]: https://github.com/zeriong/plan-smith/releases/tag/v1.4.0
 [1.3.0]: https://github.com/zeriong/plan-smith/releases/tag/v1.3.0
 [1.2.0]: https://github.com/zeriong/plan-smith/releases/tag/v1.2.0
