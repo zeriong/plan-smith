@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/zeriong/plan-smith/releases"><img src="https://img.shields.io/badge/version-1.2.0-blue" alt="Version"></a>
+  <a href="https://github.com/zeriong/plan-smith/releases"><img src="https://img.shields.io/badge/version-1.3.0-blue" alt="Version"></a>
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License: MIT"></a>
   <a href="https://docs.claude.com/en/docs/claude-code/plugins"><img src="https://img.shields.io/badge/Claude%20Code-Plugin-orange" alt="Claude Code Plugin"></a>
 </p>
@@ -41,6 +41,7 @@ Long sessions produce bad plans for a structural reason: the agent that knows yo
 - **Gate 0: it knows when a frame would hurt** *(new in 1.1)* — before any frame is chosen the pipeline asks *"followed literally, is the danger that we chose wrong, or that we left things out?"* A complete spec whose risk is omission is a **build-out** and routes to `spec-coverage` (a requirement × surface completeness matrix), because narrowing frames license the omission of whatever they did not select. This rule exists because a framed plan lost to an unframed one — see the FAQ.
 - **It specifies the wiring, not only the parts** *(new in 1.2)* — a build-out plan must carry a **load-bearing path**: the one path whose failure makes the artifact pointless, written as a chain of ≤5 hops where every hop names its guard *and where that guard first becomes true*, plus a cold-start table with no blank cells. Every `build` requirement also owes a **verb sentence outside the table** (*when ⟨actor⟩ does ⟨action⟩, ⟨result⟩ happens; its absence shows up as ⟨symptom⟩*). This exists because a plan scored full marks on surface coverage and shipped an artifact whose primary interaction did nothing — every part present, the chain through them never written down.
 - **A wiring audit before you ever see the plan** *(new in 1.2)* — for build-outs, a **second, fresh** plan-writer instance audits the finished plan against five document-level questions (unfilled hops, blank cold-start cells, hops naming symbols the plan never creates, ledger rows lacking verb sentences, guarantees claimed in prose instead of a command in "done"). An author cannot audit their own omissions. Costs ~20–35% more tokens on the writing stage and buys the one defect class reading cannot see.
+- **It budgets the machinery to the implementer** *(new in 1.3)* — Gate 0 now also records **who implements this plan**, because every part a plan demands (a build chain, a pinned dependency, a config referencing another config) is one more surface a weak implementer can fail to reproduce. In a 9-cell transfer test, a strong model's plans handed to the weakest model killed it *at the build step* in five of six cells, earlier than its own modest plan did. A weak or unknown implementer therefore gets the plan demanding the least machinery — no build chain, dependencies as complete copyable strings, no command-form completion criteria it cannot run.
 - **Lossless delivery + retrospective data** — the plan file is presented in full, and every outcome (adopted / edited / rejected) is appended to the packet, accumulating data to tune frame routing over time.
 
 ## Installation

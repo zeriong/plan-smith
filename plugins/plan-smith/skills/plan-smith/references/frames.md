@@ -24,6 +24,8 @@ A task can be both: a build-out containing one hard trade-off. Then `spec-covera
 
 **Tie-break — when genuinely unsure, choose build-out.** The two misroutings do not cost the same. A build-out sent to a narrowing frame **silently omits requirements**, and the loss surfaces only after implementation (in the observed case: no audio, no effects, no persistence layer at all). A decision sent to `spec-coverage` merely leaves one cell shallow, and the borrow rule above repairs it inside the same document. Asymmetric costs, so lean to the recoverable error.
 
+**Second axis — who implements this?** Deliverable type picks the frame; the implementer picks the **weight**. Record in the packet who will build from this plan (a resolved model id, a person, or "unknown") and apply **the machinery budget** (see the section of that name near the end of this file). A weak or unknown implementer gets the plan that demands the least machinery, however capable the planner is — observed: plans a strong model wrote for itself, handed to a weak implementer, killed it **at the build step**, earlier than its own modest plan did.
+
 ### The four predicates
 
 Pick frames by these four predicates, not by domain nouns:
@@ -395,7 +397,19 @@ Two exemptions, both placed at the **end** and both terse: the style-mandated co
 
 Observed cost of ignoring this: one plan spent ~37% of its body on methodology self-narration to earn — by its own confession — three paragraphs of design value, and the displaced pages were exactly the requirements that never got built.
 
+### The machinery budget — fit the plan to the implementer
+
+A plan's demands are not free. **Every part it requires — a build chain, a pinned dependency, a config file that references another config file — is one more surface the implementer can fail to reproduce.** A strong implementer absorbs that cost. A weak one dies of it, and dies *earlier* than it would have on its own: in a 9-cell transfer test, the weakest model given a strong model's plans failed **at the build step** in five of six cells (a phantom `@types` pin twice, a tsconfig referenced but never written twice, a deep import that does not exist once), while given its own modest no-build plan it reached the fire level the one time its single moving part — one CDN URL — was right.
+
+Budget the machinery to the implementer recorded in the packet:
+
+- **Weak or unknown implementer** — the best plan demands the least machinery: **no build chain** (plain files a browser or runtime loads directly), few files, no config that references another config, and every external dependency written as a **complete copyable string** — the full URL with its exact version, not a name to recall, because recall hallucinates (the same phantom `matter-js 2.0.20` appeared across three independent runs). Command-form completion criteria are wasted here — an implementer that cannot run commands will write "validation chain ready" over an artifact that fails the chain's first step; give it checks it can perform by reading its own output.
+- **Strong implementer** — the full discipline in this file applies as written; machinery is affordable, and the wiring rules above are the binding constraint.
+
+Prescriptive plans buy consistency either way — **including consistent breakage** (the heaviest plan in the same test failed all three replicas at the same spot). The machinery budget decides what that consistency replicates.
+
 Quality gate (plan-writer self-check):
+- [ ] **Machinery budget:** does the machinery this plan demands match the packet's implementer profile? For a weak/unknown implementer: no build chain, no config-referencing-config, every dependency a complete copyable string, and no command-form completion criteria it cannot run.
 - [ ] **Load-bearing path:** is there a chain of ≤5 hops for the one path whose failure makes the artifact
       pointless, with all three columns filled — and does the cold-start table have **no blank cells**?
       Every "passes only if" condition needs a "first becomes true at". A hop naming a symbol the plan

@@ -12,6 +12,44 @@ version has to move. Release 1.1.1 exists for that reason alone.
 
 ---
 
+## [1.3.0] — 2026-08-13
+
+Driven by the first experiment in which someone other than the planner implemented the plan —
+and the result **inverted**. Nine cells: the weakest model implemented three times each from its own
+plan, from a strong model's baseline plan, and from a strong model's 1.2.0 plan-smith plan. Handed the
+strong plans, it died **at the build step** in five of six cells — earlier than on its own modest plan —
+each time failing to reproduce one demanded part: a phantom `@types` pin (twice), a tsconfig that
+references a file never written (twice), a deep import that does not exist (once). The 1.2.0 plan,
+heaviest of the three, failed all three replicas while its implementer notes announced the validation
+chain ready. The implementer's own plan had one moving part, a CDN URL; the one replica that got it
+right reached the fire level immediately.
+
+The lesson: **every part a plan demands is one more surface a weak implementer can fail to
+reproduce.** A plan optimized for completeness is optimized for a reader who can absorb machinery;
+weak implementers need plans optimized for reproducibility.
+
+### Added
+
+- **Gate 0's second axis — who implements this?** The packet records the implementer (resolved model
+  id, a person, or "unknown"); when unknown, it is a `⚠guess` resolved at the confirmation gate and
+  budgeted for the weakest plausible implementer until then.
+- **`### The machinery budget`** (`frames.md`) — deliverable type picks the frame, the implementer
+  picks the *weight*. Weak or unknown implementer: **no build chain**, few files, no
+  config-referencing-config, every dependency a **complete copyable string** (the full URL with exact
+  version — recall hallucinates: the same phantom `matter-js 2.0.20` appeared across three independent
+  runs), and no command-form completion criteria the implementer cannot run — it will write
+  "validation chain ready" over an artifact that fails the chain's first step. Strong implementer:
+  1.2.0 discipline applies as written.
+- One quality-gate item binding the plan's demanded machinery to the packet's implementer profile.
+
+### Pre-registered validation (recorded before the verdict exists)
+
+The cheapest rival to this clause is a single packet line naming the implementer. The acceptance test
+therefore compares against an **informed baseline**, not an ignorant one: same weak implementer, n=3,
+arm A = baseline plan told who implements, arm B = 1.3.0 plan-smith. The clause earns its place only
+if B beats A on the graded ladder; if B ≈ A, this changelog gets that verdict appended — the release
+stays either way, because history is not rewritten here.
+
 ## [1.2.0] — 2026-08-01
 
 The second release driven by a failure of this plugin's own output — and this time the plan
@@ -206,6 +244,7 @@ Initial release.
   experiment it came from, and the pipeline still treats it as promising rather
   than proven. Retrospectives accumulate the evidence.
 
+[1.3.0]: https://github.com/zeriong/plan-smith/releases/tag/v1.3.0
 [1.2.0]: https://github.com/zeriong/plan-smith/releases/tag/v1.2.0
 [1.1.3]: https://github.com/zeriong/plan-smith/releases/tag/v1.1.3
 [1.1.2]: https://github.com/zeriong/plan-smith/releases/tag/v1.1.2

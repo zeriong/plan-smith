@@ -51,6 +51,8 @@ Marking rule: any field inferred rather than confirmed from the conversation car
 - Type: <decision | build-out>
 - Rationale: <followed literally, is the danger a wrong choice or an omission?>
 - (build-out) Frame is `spec-coverage`; any other frame is borrowed for one named sub-decision only: <which, or none>
+- **Implementer**: <who builds from this plan — resolved model id / person / "unknown". Not optional: the implementer picks the plan's *weight*>
+- (weak or unknown implementer) **Machinery budget applies** — no build chain, no config-referencing-config, dependencies as complete copyable strings; see frames.md "The machinery budget"
 
 ## Load-bearing path candidate (build-out only)
 <!-- Which single path, if it fails, makes the artifact pointless? Not the most complex path — the one
