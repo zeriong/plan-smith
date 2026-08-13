@@ -12,6 +12,45 @@ version has to move. Release 1.1.1 exists for that reason alone.
 
 ---
 
+## [1.4.0] — 2026-08-13
+
+The first release **gated by its validation instead of validated after shipping.** The draft sat
+uncommitted in the source tree until a pre-registered A/B passed; the rules below were frozen and
+committed to the lab before any cell ran.
+
+A review pass had found three defects. The sharpest: **the v1.2/1.3 rule sections never reached the
+isolated production writer** — Stage 2's delegation list copies the frame spec, the style directive
+and the common template, but not the load-bearing path, verb-sentence, implementer-contract or
+machinery-budget sections; the batch harness read frames.md whole and masked this through two
+releases. Second, the run stamp lacked the plugin.json location and produced an observed "unknown"
+stamp. Third, the residual failure class in transfer testing was **glue recalled instead of copied**
+— an undefined `setState`, an unaliased `Composite` — while the one thing made copyable (the CDN URL)
+had taken phantom versions from five incidents to zero.
+
+### Added
+
+- **Copyable glue** (machinery budget, weak/unknown implementer): the plan carries **verbatim
+  copyable blocks** for the highest-risk connective code — the dependency alias line, a symbol table
+  naming each file's public functions with exact signatures, and initial state declarations. Not
+  implementation: the plan pinning the joints the implementer would otherwise recall, because what is
+  copyable does not get hallucinated. One quality-gate item extended accordingly.
+
+### Fixed
+
+- Stage 2 delegation item 5 now hands the writer, for build-outs, the four specification-rule
+  sections verbatim — the writer cannot honor rules it never receives.
+- Run stamp names the plugin.json location (`.claude-plugin/plugin.json`) and forbids inferring a
+  version from a path, which is exactly what happened in the 1.3 validation run.
+
+### Gate verdict (pre-registered, run `wf_32c69d79-148`, before this commit existed)
+
+Informed opus baseline vs this draft, haiku implementing four times each, plan as the only input.
+Primary metric — glue deaths (uncaught missing-symbol errors): **1 vs 2**. Secondary — ladder median:
+**L5 vs a L1/L5 split**, and the glue arm produced the test family's **first stage CLEAR**. Both
+pre-registered conditions held, so this release exists. Recorded with the same honesty as before:
+n=4, one task, one weak model — and the glue arm's one remaining death was itself a glue symbol
+(`worldSettled`), so the clause reduced the class without eliminating it.
+
 ## [1.3.0] — 2026-08-13
 
 Driven by the first experiment in which someone other than the planner implemented the plan —
@@ -257,6 +296,7 @@ Initial release.
   experiment it came from, and the pipeline still treats it as promising rather
   than proven. Retrospectives accumulate the evidence.
 
+[1.4.0]: https://github.com/zeriong/plan-smith/releases/tag/v1.4.0
 [1.3.0]: https://github.com/zeriong/plan-smith/releases/tag/v1.3.0
 [1.2.0]: https://github.com/zeriong/plan-smith/releases/tag/v1.2.0
 [1.1.3]: https://github.com/zeriong/plan-smith/releases/tag/v1.1.3
